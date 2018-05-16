@@ -1,6 +1,6 @@
 Greetings!
 
-To setup demonstration please run:
+To setup the demonstration please run:
 
 npm install
 
