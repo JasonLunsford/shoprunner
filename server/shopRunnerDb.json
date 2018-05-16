@@ -6,31 +6,55 @@
             "firstName": "george",
             "lastName": "washington",
             "username": "patriot",
-            "password": "z00m",
             "birthday": "-7506086400000",
-            "favColor0": "green",
-            "favColor1": "yellow",
-            "favColor2": "darkred"
+            "favColor0": "darkgreen",
+            "favColor1": "darkred",
+            "preferredExp": {
+                "fancypants": {
+                    "exp1": 0,
+                    "exp2": 0
+                },
+                "sweetsoul": {
+                    "exp1": 0,
+                    "exp2": 0
+                }
+            }
         },
         {
             "firstName": "aanjan",
             "lastName": "ravi",
             "username": "wrex",
-            "password": "supermansux",
             "birthday": "484790400000",
-            "favColor0": "blue",
-            "favColor1": "pink",
-            "favColor2": "purple"
+            "favColor0": "pink",
+            "favColor1": "darkpurple",
+            "preferredExp": {
+                "fancypants": {
+                    "exp1": 0,
+                    "exp2": 0
+                },
+                "sweetsoul": {
+                    "exp1": 0,
+                    "exp2": 0
+                }
+            }
         },
         {
             "firstName": "becky",
             "lastName": "stout",
             "username": "beerlover",
-            "password": "victory!",
             "birthday": "655084800000",
-            "favColor0": "orange",
+            "favColor0": "darkorange",
             "favColor1": "brown",
-            "favColor2": "darkgreen"
+            "preferredExp": {
+                "fancypants": {
+                    "exp1": 0,
+                    "exp2": 0
+                },
+                "sweetsoul": {
+                    "exp1": 0,
+                    "exp2": 0
+                }
+            }
         }
     ],
     "john": "John Washington",
@@ -52,14 +76,54 @@
         {
             "tradeName": "Fancy Pants",
             "lookupName": "fancypants",
-            "brandColor1": "#222",
-            "brandColor2": "#ff8c00"
+            "counter": {
+                "exp1": 0,
+                "exp2": 0
+            },
+            "experiences": [
+                {
+                    "lookupName": "exp1",
+                    "name": "Muted Gold",
+                    "background": "#f4f4f4",
+                    "details": "#dcd0c0",
+                    "foreground": "#c0b283",
+                    "text": "#373737"
+                },
+                {
+                    "lookupName": "exp2",
+                    "name": "Minimal Dusty",
+                    "background": "#d5d5d5",
+                    "details": "#96858f",
+                    "foreground": "#6d7993",
+                    "text": "#373737"
+                }
+            ]
         },
         {
             "tradeName": "Sweet Soul",
             "lookupName": "sweetsoul",
-            "brandColor1": "#8b008b",
-            "brandColor2": "#fff"
+            "counter": {
+                "exp1": 0,
+                "exp2": 0
+            },
+            "experiences": [
+                {
+                    "lookupName": "exp1",
+                    "name": "Warm Sky",
+                    "background": "#efefef",
+                    "details": "#caebf2",
+                    "foreground": "#c0b283",
+                    "text": "#a9a9a9"
+                },
+                {
+                    "lookupName": "exp2",
+                    "name": "Pretty Peach",
+                    "background": "#fedcd2",
+                    "details": "#df744a",
+                    "foreground": "#8fd8d2",
+                    "text": "#233237"
+                }
+            ]
         }
     ]
 }

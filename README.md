@@ -12,8 +12,8 @@ Once installation is complete please keep the terminals open and run:
 
 npm start
 
-FancyPants runs on port 3001
-SweetSoul runs on port 3000
+FancyPants runs on port 5001
+SweetSoul runs on port 5000
 
 To reset the db, please execute this command in a separate tab or via curl:
 

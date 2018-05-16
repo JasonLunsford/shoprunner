@@ -8,11 +8,13 @@ import './FancyPants.css';
 
 export default class FancyPants extends Component {
   state = {
-    open: false,
+    open:  false,
     users: [],
-    user: {},
-    color: '',
-    companyData: {}
+    user:  {},
+    companyData: {},
+    activeExp: {},
+    counter: 0,
+    showButton: true
   };
 
   coreGetConfig = {
@@ -22,28 +24,36 @@ export default class FancyPants extends Component {
   };
 
   componentDidMount() {
-    this.getAllUsers().then(result => {
-      this.setState({ users: result });
+    this.getAllUsers().then(users => {
+      this.setState({ users });
     });
 
-    this.getCompanyData().then(result => {
-      this.setState({ companyData: result });
+    this.getCompanyData().then(companyData => {
+      const random = this.randomNum(1);
+      const activeExp = companyData.experiences[random];
+
+      this.setState({ companyData, activeExp });
     });
   }
 
   onOpenModal = () => {
-    let user = this.state.users[this.randomNum()];
-    let color = `favColor${this.randomNum()}`;
+    let random = this.randomNum(2);
+    let user = this.state.users[random];
 
-    this.setState({ open: true, user, color });
+    this.setState({ open: true, user });
   };
 
   onCloseModal = () => {
-    this.setState({ open: false, user: {}, color: '' });
+    this.setState({ open: false, user: {} });
   };
 
-  randomNum() {
-    return _.random(0, 2);
+  onSignupClickCount = () => {
+    let counter = this.state.counter + 1;
+    this.setState({ counter, showButton: false })
+  };
+
+  randomNum(upper) {
+    return _.random(0, upper);
   }
 
   async getAllUsers() {
@@ -63,14 +73,26 @@ export default class FancyPants extends Component {
   }
 
   render() {
-    const { open, companyData, user, color } = this.state;
+    const { open, companyData, user, showButton } = this.state;
     const firstName = _.capitalize(user.firstName);
-    const favColor = user[color];
-    const message = (
+
+    const learnMoreLink = (
+      <a onClick={this.onOpenModal}>Learn more!</a>
+    );
+
+    const signUpButton = (
+      <button onClick={this.onSignupClickCount}>Sign Me Up!</button>
+    );
+
+    const thankYouMsg = (
+      <span>Thank You!</span>
+    );
+
+    const shopContent = (
       <div>
-        <h2>{companyData.tradeName} Is Awesome</h2>
-        <p>But ShopRunner makes it special.</p>
-        <p>Add stuff about <span style={{color: favColor}}>{firstName}</span>, figure out a way to do more w colors</p>
+        <p>We at Fancy Pants strive to cloth our customes in nothing but the finest in pants wear.</p>
+        <p>Together with ShopRunner, we can now get our award winning articles to your door in 2 days!</p>
+        <p>{firstName} what are you waiting for? Join now and save big!</p>
       </div>
     );
 
@@ -84,14 +106,19 @@ export default class FancyPants extends Component {
             Brought to you by ShopRunner.
           </p>
           <p className="App-hook">
-            Interested in shopping with ShopRunner? <a onClick={this.onOpenModal}>Learn more!</a>
+            Interested in shopping with ShopRunner? {learnMoreLink}
           </p>
         </section>
         <Modal open={open} 
                onClose={this.onCloseModal} 
                center 
                classNames={{ modal: 'modal-body' }}>
-          {message}
+          <div>
+            <h2>{companyData.tradeName} Is Awesome</h2>
+            <p>But ShopRunner makes it special.</p>
+            {shopContent}
+            { showButton ? signUpButton : thankYouMsg }
+          </div>
         </Modal>
       </div>
     );
