@@ -1,0 +1,23 @@
+{
+  "name": "mock_shoprunner_server",
+  "version": "1.0.0",
+  "description": "Mock ShopRunner Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "REST"
+  ],
+  "author": "Jason Lunsford",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "lodash": "^4.17.10",
+    "node-json-db": "^0.7.5",
+    "query-string": "^5.0.0"
+  }
+}

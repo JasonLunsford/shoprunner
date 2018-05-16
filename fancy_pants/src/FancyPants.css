@@ -1,0 +1,54 @@
+
+.App-header {
+  align-items:      center;
+  background-color: #222;
+  color:            #fff;
+  display:          flex;
+  height:           60px;
+  justify-content:  center;
+  padding:          20px;
+}
+
+.App-title {
+  flex:      0 1 auto;
+  font-size: 2em;
+  margin:    0;
+  padding:   0;
+}
+
+.App-body {
+  align-items:      center;
+  display:          flex;
+  flex-direction:   column;
+  justify-content:  center;
+}
+
+.App-message {
+  flex:          0 1 auto;
+  font-size:     1.5em;
+  margin-bottom: 0;
+}
+
+.App-hook {
+  flex:          0 1 auto;
+  font-size:     1em;
+  font-weight:   bold;
+  margin-bottom: 0;
+}
+
+.App-hook a {
+  color: #ff8c00;
+}
+
+.App-hook a:hover,
+.App-hook a:active {
+  cursor:          pointer;
+  text-decoration: underline;
+}
+
+.modal-body {
+  background-color: #222;
+  border:           1px solid #ff8c00;
+  color:            #fff;
+  margin:           20px 10px;
+}

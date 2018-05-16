@@ -1,0 +1,55 @@
+
+.App-header-reverse {
+  align-items:      center;
+  background-color: #fff;
+  border-bottom:    1px solid #222;
+  color:            #222;
+  display:          flex;
+  height:           59px;
+  justify-content:  center;
+  padding:          20px;
+}
+
+.App-title {
+  flex:      0 1 auto;
+  font-size: 2em;
+  margin:    0;
+  padding:   0;
+}
+
+.App-body {
+  align-items:      center;
+  display:          flex;
+  flex-direction:   column;
+  justify-content:  center;
+}
+
+.App-message {
+  flex:          0 1 auto;
+  font-size:     1.5em;
+  margin-bottom: 0;
+}
+
+.App-hook {
+  flex:          0 1 auto;
+  font-size:     1em;
+  font-weight:   bold;
+  margin-bottom: 0;
+}
+
+.App-hook a {
+    color: #8b008b;
+}
+
+.App-hook a:hover,
+.App-hook a:active {
+  cursor:          pointer;
+  text-decoration: underline;
+}
+
+.modal-body {
+  background-color: #fff;
+  border:           1px solid #8b008b;
+  color:            #222;
+  margin:           20px 10px;
+}
