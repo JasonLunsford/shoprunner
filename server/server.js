@@ -17,11 +17,15 @@ app.use(bodyParser.json());
 
 // Prepare routes
 let index = require('./routes/index');
-let coreApis = require('./routes/coreApis');
+let analytics = require('./routes/analytics');
+let registration = require('./routes/registration');
+let authentication = require('./routes/authentication');
 
 // Use routes
 app.use('/', index);
-app.use('/shoprunner', coreApis);
+app.use('/analytics', analytics);
+app.use('/registration', registration);
+app.use('/authentication', authentication);
 
 // Global failure route
 app.all('/*', (req, res) => {

@@ -72,9 +72,8 @@ router.get('/', async (req, res) => {
 				"lastName":     "washington",
 				"username":     "patriot",
 				"birthday":     "-7506086400000",
-				"favColor0":    "darkgreen",
-				"favColor1":    "darkred",
-				"preferredExp": [
+				"favColor":     "darkgreen",
+				"preferredExp": {
 					"fancypants": {
 						"exp1": 0,
 						"exp2": 0
@@ -83,16 +82,15 @@ router.get('/', async (req, res) => {
 						"exp1": 0,
 						"exp2": 0
 					}
-				]
+				}
 			},
 			{
 				"firstName":    "aanjan",
 				"lastName":     "ravi",
 				"username":     "wrex",
 				"birthday":     "484790400000",
-				"favColor0":    "pink",
-				"favColor1":    "darkpurple",
-				"preferredExp": [
+				"favColor":     "darkmagenta",
+				"preferredExp": {
 					"fancypants": {
 						"exp1": 0,
 						"exp2": 0
@@ -101,16 +99,15 @@ router.get('/', async (req, res) => {
 						"exp1": 0,
 						"exp2": 0
 					}
-				]
+				}
 			},
 			{
 				"firstName":    "becky",
 				"lastName":     "stout",
 				"username":     "beerlover",
 				"birthday":     "655084800000",
-				"favColor0":    "darkorange",
-				"favColor1":    "brown",
-				"preferredExp": [
+				"favColor":     "darkorange",
+				"preferredExp": {
 					"fancypants": {
 						"exp1": 0,
 						"exp2": 0
@@ -119,7 +116,7 @@ router.get('/', async (req, res) => {
 						"exp1": 0,
 						"exp2": 0
 					}
-				]
+				}
 			}
 		]);
 
@@ -166,24 +163,40 @@ router.get('/shops/:id', async (req, res) => {
 
 router.post('/users/:id', async (req, res) => {
 	const userId = req.params.id;
-	const users = db.getData('/users');
 	const payload = JSON.parse(req.body.payload);
 
-	let user = users.filter(u => u.firstName === userId);
+	const users = db.getData('/users');
+	const isValid = _.find(users, user => user.firstName === userId);
 
-	if (userId === null || user.length === 0) {
+	if (userId === null || !isValid) {
 		res.status(404).send({status: 404, msg: 'Id not found'});
+	} else {
+		let updatedUsers = _.filter(users, user => user.firstName !== userId);
+		updatedUsers = [...updatedUsers, payload];
+
+		db.push('/users', updatedUsers, true);
+
+		res.status(200).send({status: 200});
 	}
+});
 
-	res.send({payload});
+router.post('/shops/:id', async (req, res) => {
+	const shopId = req.params.id;
+	const payload = JSON.parse(req.body.payload);
 
-	// _.filter(users, user => {
-	// 	if (user.firstName === userId) {
-	// 		_.assign({}, user, payload);
-	// 	}
-	// });
+	const shops = db.getData('/shops');
+	const isValid = _.find(shops, shop => shop.lookupName === shopId);
 
-	// db.push('/users', users);
+	if (shopId === null || !isValid) {
+		res.status(404).send({status: 404, msg: 'Id not found'});
+	} else {
+		let updatedShops = _.filter(shops, shop => shop.lookupName !== shopId);
+		updatedShops = [...updatedShops, payload];
+
+		db.push('/shops', updatedShops, true);
+
+		res.status(200).send({status: 200});
+	}
 });
 
 module.exports = router;

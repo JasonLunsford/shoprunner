@@ -8,31 +8,29 @@ import './SweetSoul.css';
 
 export default class SweetSoul extends Component {
   state = {
-    open:  false,
-    users: [],
-    user:  {},
-    companyData: {},
-    activeExp: {},
-    counter: 0,
-    showButton: true
+    open:       false,
+    showButton: true,
+    users:      [],
+    user:       {},
+    shopData:   {},
+    activeExp:  {}
   };
 
   coreGetConfig = {
       method:  'get',
-      baseURL: 'http://localhost:8181/shoprunner'
-  };
-
-  corePostConfig = {
-      method:  'post',
-      baseURL: 'http://localhost:8181/shoprunner'
+      baseURL: 'http://localhost:8181/analytics'
   };
 
   componentDidMount() {
-    this.getAllUsers().then(users => {
-      this.setState({ users });
+    this.getUsers().then(users => {
+
+      let random = this.randomNum(2);
+      let user = users[random];
+
+      this.setState({ users, user });
     });
 
-    this.getShopData().then(shopData => {
+    this.getShop().then(shopData => {
       const random = this.randomNum(1);
       const activeExp = shopData.experiences[random];
 
@@ -41,36 +39,34 @@ export default class SweetSoul extends Component {
   }
 
   onOpenModal = () => {
-    let random = this.randomNum(2);
-    let user = this.state.users[random];
-
-    this.setState({ open: true, user });
+    this.setState({ open: true });
   };
 
   onCloseModal = () => {
-    const expHandle = this.state.activeExp.lookupName;
-
-    let userData = this.state.user;
-    let companyData = this.state.companyData;
-
-    companyData.counter[expHandle] = this.state.counter;
-    userData.preferredExp[companyData.lookupName][expHandle] = this.state.counter;
-
-    this.updateUser(userData);
-
-    this.setState({ open: false, user: {} });
+    this.setState({ open: false });
   };
 
-  onSignupClickCount = () => {
-    let counter = this.state.counter + 1;
-    this.setState({ counter, showButton: false })
+  onSignup = async () => {
+    const { user, shopData, activeExp } = this.state;
+    const expHandle = activeExp.lookupName;
+
+    let expCounter = _.get(shopData.counter, expHandle);
+    let prefCounter = _.get(user.preferredExp.sweetsoul, expHandle);
+
+    _.set(shopData.counter, expHandle, expCounter + 1);
+    _.set(user.preferredExp.sweetsoul, expHandle, prefCounter + 1);
+
+    await this.updateUser(user);
+    await this.updateShop(shopData);
+
+    this.setState({ user, shopData, showButton: false });
   };
 
   randomNum(upper) {
     return _.random(0, upper);
   }
 
-  async getAllUsers() {
+  async getUsers() {
     let config = _.assign({}, this.coreGetConfig, {url: 'users/all'});
 
     let result = await axios(config);
@@ -78,7 +74,7 @@ export default class SweetSoul extends Component {
     return result.data.users;
   }
 
-  async getShopData() {
+  async getShop() {
     let config = _.assign({}, this.coreGetConfig, {url: 'shops/sweetsoul'});
 
     let result = await axios(config);
@@ -86,42 +82,50 @@ export default class SweetSoul extends Component {
     return result.data.shop[0];
   }
 
-  async updateUser(user) {
-    let customConfig = {
-      url: `users/${user.firstName}`,
-      payload: {
-        user
-      }
-    };
+  updateUser(user) {
+    let stringData = JSON.stringify(user);
+    let userData = `payload=${stringData}`;
 
-    let config = _.assign({}, this.corePostConfig, customConfig);
-
-    await axios(config);
+    return fetch(`http://localhost:8181/analytics/users/${user.firstName}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: userData
+    }).then(res => res.json());
   }
 
-  async updateShopData(shop) {
-    let customConfig = {
-      url: `shops/${shop.lookupName}`,
-      payload: {
-        shop
-      }
-    };
+  updateShop(shop) {
+    let stringData = JSON.stringify(shop);
+    let shopData = `payload=${stringData}`;
 
-    let config = _.assign({}, this.corePostConfig, customConfig);
-
-    await axios(config);
+    return fetch(`http://localhost:8181/analytics/shops/${shop.lookupName}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: shopData
+    }).then(res => res.json());
   }
 
   render() {
-    const { open, companyData, user, showButton } = this.state;
-    const firstName = _.capitalize(user.firstName);
+    const { open, shopData, user, showButton, activeExp } = this.state;
+    
+    const firstName = (
+      <span style={{color:user.favColor}}>{_.capitalize(user.firstName)}</span>
+    );
 
     const learnMoreLink = (
       <a onClick={this.onOpenModal}>Learn more!</a>
     );
 
     const signUpButton = (
-      <button onClick={this.onSignupClickCount}>Sign Me Up!</button>
+      <button className="modal-button"
+              onClick={this.onSignup}
+              style={{color:activeExp.background, 
+                      background:activeExp.foreground}}>Sign Me Up</button>
     );
 
     const thankYouMsg = (
@@ -132,14 +136,14 @@ export default class SweetSoul extends Component {
       <div>
         <p>The world is full of rotten souls - but now you can join the Revolution.</p>
         <p>Together with ShopRunner, your new shoes will be on your feet in 2 days!</p>
-        <p>Bring kindness to the world {firstName} with a sweet sole from {companyData.tradeName}.</p>
+        <p>Bring kindness to the world {firstName} with a sweet sole from {shopData.tradeName}.</p>
       </div>
     );
 
     return (
       <div className="App">
         <header className="App-header-reverse">
-          <h1 className="App-title">Welcome to {companyData.tradeName}</h1>
+          <h1 className="App-title">Welcome to {shopData.tradeName}</h1>
         </header>
         <section className="App-body">
           <p className="App-message">
@@ -152,9 +156,15 @@ export default class SweetSoul extends Component {
         <Modal open={open} 
                onClose={this.onCloseModal} 
                center 
-               classNames={{ modal: 'modal-body' }}>
-          <div>
-            <h2>{companyData.tradeName} Is Awesome</h2>
+               classNames={{ modal: 'modal-body' }}
+               styles={{ modal: {
+                background: activeExp.background,
+                borderColor: activeExp.details,
+                color: activeExp.text
+              }}}>
+          <div className="modal-shell">
+            <span className="theme-badge" style={{borderBottomColor:activeExp.details}}>{activeExp.name}</span>
+            <h2 className="modal-header" style={{color:activeExp.foreground}}>{shopData.tradeName} Is Awesome</h2>
             <p>But ShopRunner makes it special.</p>
             {shopContent}
             { showButton ? signUpButton : thankYouMsg }

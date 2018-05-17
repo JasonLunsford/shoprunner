@@ -7,26 +7,7 @@
             "lastName": "washington",
             "username": "patriot",
             "birthday": "-7506086400000",
-            "favColor0": "darkgreen",
-            "favColor1": "darkred",
-            "preferredExp": {
-                "fancypants": {
-                    "exp1": 0,
-                    "exp2": 0
-                },
-                "sweetsoul": {
-                    "exp1": 0,
-                    "exp2": 0
-                }
-            }
-        },
-        {
-            "firstName": "aanjan",
-            "lastName": "ravi",
-            "username": "wrex",
-            "birthday": "484790400000",
-            "favColor0": "pink",
-            "favColor1": "darkpurple",
+            "favColor": "darkgreen",
             "preferredExp": {
                 "fancypants": {
                     "exp1": 0,
@@ -43,8 +24,7 @@
             "lastName": "stout",
             "username": "beerlover",
             "birthday": "655084800000",
-            "favColor0": "darkorange",
-            "favColor1": "brown",
+            "favColor": "darkorange",
             "preferredExp": {
                 "fancypants": {
                     "exp1": 0,
@@ -53,6 +33,23 @@
                 "sweetsoul": {
                     "exp1": 0,
                     "exp2": 0
+                }
+            }
+        },
+        {
+            "firstName": "aanjan",
+            "lastName": "ravi",
+            "username": "wrex",
+            "birthday": "484790400000",
+            "favColor": "darkmagenta",
+            "preferredExp": {
+                "fancypants": {
+                    "exp1": 0,
+                    "exp2": 0
+                },
+                "sweetsoul": {
+                    "exp1": 0,
+                    "exp2": 1
                 }
             }
         }
@@ -104,7 +101,7 @@
             "lookupName": "sweetsoul",
             "counter": {
                 "exp1": 0,
-                "exp2": 0
+                "exp2": 1
             },
             "experiences": [
                 {

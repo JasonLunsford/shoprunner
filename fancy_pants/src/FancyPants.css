@@ -37,7 +37,7 @@
 }
 
 .App-hook a {
-  color: #ff8c00;
+  color: #00008b;
 }
 
 .App-hook a:hover,
@@ -46,9 +46,37 @@
   text-decoration: underline;
 }
 
+.theme-badge {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  display:             inline-block;
+  margin-bottom:       5px;
+  padding-bottom:      5px;
+  width:               100%;
+}
+
 .modal-body {
-  background-color: #222;
-  border:           1px solid #ff8c00;
-  color:            #fff;
-  margin:           20px 10px;
+  border-radius: 5px;
+  border-style:  solid;
+  border-width:  5px;
+  margin:        20px 10px;
+}
+
+.modal-shell {
+  margin:  0;
+  padding: 0;
+  width:   95%;
+}
+
+.modal-header {
+  margin-top:    10px;
+  margin-bottom: 0;
+}
+
+.modal-button {
+  border-radius: 4px;
+  font-size:     14px;
+  padding:       6px 10px;
+  cursor:        pointer;
+  text-shadow:   0 1px 1px rgba(0, 0, 0, 0.2);
 }
