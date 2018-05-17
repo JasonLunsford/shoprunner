@@ -17,6 +17,38 @@ SweetSoul runs on port 5000
 
 To reset the db, please execute this command in a separate tab or via curl:
 
-http://localhost:8181/shoprunner?prep=true
+http://localhost:8181/analytics?prep=true
+
+To access the complete set of users & their current metrics go here:
+
+http://localhost:8181/analytics/users/all
+
+The returned object will contain a small subobject:
+
+    "preferredExp": {
+        "fancypants": {
+            "exp1": 0,
+            "exp2": 0
+        },
+        "sweetsoul": {
+            "exp1": 0,
+            "exp2": 0
+        }
+    }
+
+Watch for these values to increment when the user is randomly selected on shop reload, and the sign up button clicked. Remember experiences are randomly selected too!
+
+To access the complete set of shops & their current meterics go here:
+
+http://localhost:8181/analytics/shops/all
+
+The returned object will contain a small object:
+
+    "counter": {
+        "exp1": 0,
+        "exp2": 0
+    }
+
+Here is where the total number of times each of the two experiences are clicked.
 
 Thank you.
